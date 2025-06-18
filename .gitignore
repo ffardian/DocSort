@@ -1,0 +1,74 @@
+# Bytecode-Dateien und Cache
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+env/
+ENV/
+
+# Python-Distributionen
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer-Logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# mypy, pyright, pytest, coverage etc.
+.mypy_cache/
+.pytest_cache/
+.pyright/
+.coverage
+htmlcov/
+.cache/
+.tox/
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+
+# Streamlit spezifisch
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# dotenv
+.env
+.env.*
+
+# Jupyter Notebooks checkpoints
+.ipynb_checkpoints
+
+# Editor/IDE-Dateien
+.vscode/
+.idea/
+*.swp
+*~
+
+# System-/OS-Dateien
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Box/Dropbox Tokens, falls lokal gespeichert
+box_tokens.json
+dropbox_tokens.json
