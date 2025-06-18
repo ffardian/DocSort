@@ -18,6 +18,8 @@ uploaded_files = st.file_uploader("Classify documents and automatically assign t
 
 ACCESS_TOKEN_DROPBOX = os.getenv("DROPBOX_ACCESS_TOKEN")
 LOCAL_FOLDER_PATH = os.getenv("LOCAL_FOLDER_PATH")
+openai_api_key = st.session_state["openaiapikey"]
+dropbox_api_key = st.session_state["dropboxapikey"]
 
 #Folder listing depending on whether to list subfolders on local machine or cloud provider, result is always the same, you get a list of sub folder
 def listSubFolder(cloud_provider):
@@ -29,7 +31,7 @@ def listSubFolder(cloud_provider):
             return base_path,folders
         case "Dropbox":
             base_path = "/DocSort"
-            db_cloud = DropBoxTool(ACCESS_TOKEN_DROPBOX) #o ACCESS_TOKEN_DROPBOX
+            db_cloud = DropBoxTool(dropbox_api_key) #o ACCESS_TOKEN_DROPBOX
             if not db_cloud.folder_exists("","DocSort"):
                 db_cloud.create_folder(base_path)
             return base_path, db_cloud.list_dropbox_subfolders(path=base_path)
@@ -47,7 +49,8 @@ def invoke_categorization_process(uploaded_files,cloud_provider):
             converter = DocumentConverter()
             result = converter.convert(document_stream)
             content = result.document.export_to_text()
-            client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            #client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            client = OpenAI(api_key=openai_api_key)
 
             #Creates folder list for the prompt, that LLM knows, which folders already exist
             base_path, folders = listSubFolder(cloud_provider=cloud_provider)
@@ -96,7 +99,7 @@ def create_new_folder(folder_name_generated,uploaded_file,cloud_provider):
                             st.toast("File saved successfully at path: " + save_path + " locally", icon=':material/save:')
         case "Dropbox":
             if not folders:
-                 db_cloud = DropBoxTool(ACCESS_TOKEN_DROPBOX)
+                 db_cloud = DropBoxTool(dropbox_api_key)
                  db_cloud.upload_to_generated_folder(
                      parent_path=base_path,
                      folder_name=folder_name_generated,
@@ -104,7 +107,7 @@ def create_new_folder(folder_name_generated,uploaded_file,cloud_provider):
                      file_content=bytes(uploaded_file.getbuffer())
                      )
             else:
-                 db_cloud = DropBoxTool(ACCESS_TOKEN_DROPBOX)
+                 db_cloud = DropBoxTool(dropbox_api_key)
                  db_cloud.upload_to_generated_folder(
                      parent_path=base_path,
                      folder_name=folder_name_generated,
