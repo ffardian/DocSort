@@ -13,14 +13,17 @@ from Dropbox import DropBoxTool
 import easyocr
 load_dotenv(override=True)
 
-easyocr.Reader = lambda langs, *args, **kwargs: easyocr.__dict__['Reader'](
-    langs,
-    *args,
-    download_enabled=False,
-    model_storage_directory='/root/.EasyOCR/model',
-    verbose=False,
-    **kwargs
-)
+import easyocr
+
+_original_reader_init = easyocr.Reader.__init__
+
+def patched_reader_init(self, lang_list, *args, **kwargs):
+    kwargs.setdefault("download_enabled", False)
+    kwargs.setdefault("model_storage_directory", "/root/.EasyOCR/model")
+    kwargs.setdefault("verbose", False)
+    _original_reader_init(self, lang_list, *args, **kwargs)
+
+easyocr.Reader.__init__ = patched_reader_init
 
 class PatchedDataLoader(OriginalDataLoader):
     def __init__(self, *args, **kwargs):
