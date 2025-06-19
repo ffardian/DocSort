@@ -16,7 +16,6 @@ docling-core==2.37.0
 docling-ibm-models==3.4.4
 docling-parse==4.0.5
 dropbox==12.0.2
-easyocr==1.7.2
 et_xmlfile==2.0.0
 filelock==3.18.0
 filetype==1.2.0
