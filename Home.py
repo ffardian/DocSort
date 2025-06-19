@@ -7,8 +7,17 @@ import os
 from dotenv import load_dotenv
 import json
 from pathlib import Path
+import torch
+from torch.utils.data import DataLoader as OriginalDataLoader
 from Dropbox import DropBoxTool
 load_dotenv(override=True)
+
+class PatchedDataLoader(OriginalDataLoader):
+    def __init__(self, *args, **kwargs):
+        kwargs['pin_memory'] = False
+        super().__init__(*args, **kwargs)
+
+torch.utils.data.DataLoader = PatchedDataLoader
 
 #choose whether cloud or to save locally 
 #cloud_provider = st.selectbox("Choose where to store the documents",["Local","Dropbox"],index=0)
