@@ -11,6 +11,11 @@ RUN apt-get update && apt-get install -y \
 
 RUN git clone https://github.com/ffardian/DocSort.git .
 
+RUN mkdir -p /root/.EasyOCR/
+
+COPY models/craft_mlt_25k.pth /root/.EasyOCR/craft_mlt_25k.pth
+COPY models/latin_g2.pth /root/.EasyOCR/latin_g2.pth
+
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8501
