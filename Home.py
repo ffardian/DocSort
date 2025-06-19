@@ -10,7 +10,17 @@ from pathlib import Path
 import torch
 from torch.utils.data import DataLoader as OriginalDataLoader
 from Dropbox import DropBoxTool
+import easyocr
 load_dotenv(override=True)
+
+easyocr.Reader = lambda langs, *args, **kwargs: easyocr.__dict__['Reader'](
+    langs,
+    *args,
+    download_enabled=False,
+    model_storage_directory='/root/.EasyOCR/model',
+    verbose=False,
+    **kwargs
+)
 
 class PatchedDataLoader(OriginalDataLoader):
     def __init__(self, *args, **kwargs):

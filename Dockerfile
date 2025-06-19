@@ -13,8 +13,8 @@ RUN git clone https://github.com/ffardian/DocSort.git .
 
 RUN mkdir -p /root/.EasyOCR/
 
-COPY models/craft_mlt_25k.pth /root/.EasyOCR/craft_mlt_25k.pth
-COPY models/latin_g2.pth /root/.EasyOCR/latin_g2.pth
+COPY models/craft_mlt_25k.pth /root/.EasyOCR//model/craft_mlt_25k.pth
+COPY models/latin_g2.pth /root/.EasyOCR/model/latin_g2.pth
 
 RUN pip3 install -r requirements.txt
 
