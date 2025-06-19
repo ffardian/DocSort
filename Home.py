@@ -18,6 +18,10 @@ uploaded_files = st.file_uploader("Classify documents and automatically assign t
 
 ACCESS_TOKEN_DROPBOX = os.getenv("DROPBOX_ACCESS_TOKEN")
 LOCAL_FOLDER_PATH = os.getenv("LOCAL_FOLDER_PATH")
+if "openaiapikey" not in st.session_state:
+    st.session_state["openaiapikey"] = ""
+if "dropboxapikey" not in st.session_state:
+    st.session_state["dropboxapikey"] = ""
 openai_api_key = st.session_state["openaiapikey"]
 dropbox_api_key = st.session_state["dropboxapikey"]
 
